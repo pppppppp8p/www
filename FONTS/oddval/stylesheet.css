@@ -1,0 +1,234 @@
+@font-face {
+    font-family: 'Oddval';
+    src: url('Oddval-ExtraBold.eot');
+    src: local('Oddval ExtraBold'), local('Oddval-ExtraBold'),
+        url('Oddval-ExtraBold.eot?#iefix') format('embedded-opentype'),
+        url('Oddval-ExtraBold.woff2') format('woff2'),
+        url('Oddval-ExtraBold.woff') format('woff'),
+        url('Oddval-ExtraBold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Oddval';
+    src: url('Oddval-Bold.eot');
+    src: local('Oddval Bold'), local('Oddval-Bold'),
+        url('Oddval-Bold.eot?#iefix') format('embedded-opentype'),
+        url('Oddval-Bold.woff2') format('woff2'),
+        url('Oddval-Bold.woff') format('woff'),
+        url('Oddval-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Oddval';
+    src: url('Oddval-Black.eot');
+    src: local('Oddval Black'), local('Oddval-Black'),
+        url('Oddval-Black.eot?#iefix') format('embedded-opentype'),
+        url('Oddval-Black.woff2') format('woff2'),
+        url('Oddval-Black.woff') format('woff'),
+        url('Oddval-Black.ttf') format('truetype');
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Oddval';
+    src: url('Oddval-BlackItalic.eot');
+    src: local('Oddval Black Italic'), local('Oddval-BlackItalic'),
+        url('Oddval-BlackItalic.eot?#iefix') format('embedded-opentype'),
+        url('Oddval-BlackItalic.woff2') format('woff2'),
+        url('Oddval-BlackItalic.woff') format('woff'),
+        url('Oddval-BlackItalic.ttf') format('truetype');
+    font-weight: 900;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Oddval';
+    src: url('Oddval-BoldItalic.eot');
+    src: local('Oddval Bold Italic'), local('Oddval-BoldItalic'),
+        url('Oddval-BoldItalic.eot?#iefix') format('embedded-opentype'),
+        url('Oddval-BoldItalic.woff2') format('woff2'),
+        url('Oddval-BoldItalic.woff') format('woff'),
+        url('Oddval-BoldItalic.ttf') format('truetype');
+    font-weight: bold;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Oddval Hairline';
+    src: url('Oddval-Hairline.eot');
+    src: local('Oddval Hairline'), local('Oddval-Hairline'),
+        url('Oddval-Hairline.eot?#iefix') format('embedded-opentype'),
+        url('Oddval-Hairline.woff2') format('woff2'),
+        url('Oddval-Hairline.woff') format('woff'),
+        url('Oddval-Hairline.ttf') format('truetype');
+    font-weight: 100;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Oddval';
+    src: url('Oddval-ExtraBoldItalic.eot');
+    src: local('Oddval ExtraBold Italic'), local('Oddval-ExtraBoldItalic'),
+        url('Oddval-ExtraBoldItalic.eot?#iefix') format('embedded-opentype'),
+        url('Oddval-ExtraBoldItalic.woff2') format('woff2'),
+        url('Oddval-ExtraBoldItalic.woff') format('woff'),
+        url('Oddval-ExtraBoldItalic.ttf') format('truetype');
+    font-weight: bold;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Oddval Hairline';
+    src: url('Oddval-HairlineItalic.eot');
+    src: local('Oddval Hairline Italic'), local('Oddval-HairlineItalic'),
+        url('Oddval-HairlineItalic.eot?#iefix') format('embedded-opentype'),
+        url('Oddval-HairlineItalic.woff2') format('woff2'),
+        url('Oddval-HairlineItalic.woff') format('woff'),
+        url('Oddval-HairlineItalic.ttf') format('truetype');
+    font-weight: 100;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Oddval';
+    src: url('Oddval-MediumItalic.eot');
+    src: local('Oddval Medium Italic'), local('Oddval-MediumItalic'),
+        url('Oddval-MediumItalic.eot?#iefix') format('embedded-opentype'),
+        url('Oddval-MediumItalic.woff2') format('woff2'),
+        url('Oddval-MediumItalic.woff') format('woff'),
+        url('Oddval-MediumItalic.ttf') format('truetype');
+    font-weight: 500;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Oddval';
+    src: url('Oddval-SemiBoldItalic.eot');
+    src: local('Oddval SemiBold Italic'), local('Oddval-SemiBoldItalic'),
+        url('Oddval-SemiBoldItalic.eot?#iefix') format('embedded-opentype'),
+        url('Oddval-SemiBoldItalic.woff2') format('woff2'),
+        url('Oddval-SemiBoldItalic.woff') format('woff'),
+        url('Oddval-SemiBoldItalic.ttf') format('truetype');
+    font-weight: 600;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Oddval';
+    src: url('Oddval-Thin.eot');
+    src: local('Oddval Thin'), local('Oddval-Thin'),
+        url('Oddval-Thin.eot?#iefix') format('embedded-opentype'),
+        url('Oddval-Thin.woff2') format('woff2'),
+        url('Oddval-Thin.woff') format('woff'),
+        url('Oddval-Thin.ttf') format('truetype');
+    font-weight: 100;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Oddval';
+    src: url('Oddval-RegularItalic.eot');
+    src: local('Oddval Regular Italic'), local('Oddval-RegularItalic'),
+        url('Oddval-RegularItalic.eot?#iefix') format('embedded-opentype'),
+        url('Oddval-RegularItalic.woff2') format('woff2'),
+        url('Oddval-RegularItalic.woff') format('woff'),
+        url('Oddval-RegularItalic.ttf') format('truetype');
+    font-weight: normal;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Oddval';
+    src: url('Oddval-LightItalic.eot');
+    src: local('Oddval Light Italic'), local('Oddval-LightItalic'),
+        url('Oddval-LightItalic.eot?#iefix') format('embedded-opentype'),
+        url('Oddval-LightItalic.woff2') format('woff2'),
+        url('Oddval-LightItalic.woff') format('woff'),
+        url('Oddval-LightItalic.ttf') format('truetype');
+    font-weight: 300;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Oddval';
+    src: url('Oddval-Medium.eot');
+    src: local('Oddval Medium'), local('Oddval-Medium'),
+        url('Oddval-Medium.eot?#iefix') format('embedded-opentype'),
+        url('Oddval-Medium.woff2') format('woff2'),
+        url('Oddval-Medium.woff') format('woff'),
+        url('Oddval-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Oddval';
+    src: url('Oddval-Light.eot');
+    src: local('Oddval Light'), local('Oddval-Light'),
+        url('Oddval-Light.eot?#iefix') format('embedded-opentype'),
+        url('Oddval-Light.woff2') format('woff2'),
+        url('Oddval-Light.woff') format('woff'),
+        url('Oddval-Light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Oddval';
+    src: url('Oddval-SemiBold.eot');
+    src: local('Oddval SemiBold'), local('Oddval-SemiBold'),
+        url('Oddval-SemiBold.eot?#iefix') format('embedded-opentype'),
+        url('Oddval-SemiBold.woff2') format('woff2'),
+        url('Oddval-SemiBold.woff') format('woff'),
+        url('Oddval-SemiBold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Oddval';
+    src: url('Oddval-ThinItalic.eot');
+    src: local('Oddval Thin Italic'), local('Oddval-ThinItalic'),
+        url('Oddval-ThinItalic.eot?#iefix') format('embedded-opentype'),
+        url('Oddval-ThinItalic.woff2') format('woff2'),
+        url('Oddval-ThinItalic.woff') format('woff'),
+        url('Oddval-ThinItalic.ttf') format('truetype');
+    font-weight: 100;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Oddval';
+    src: url('Oddval-Regular.eot');
+    src: local('Oddval Regular'), local('Oddval-Regular'),
+        url('Oddval-Regular.eot?#iefix') format('embedded-opentype'),
+        url('Oddval-Regular.woff2') format('woff2'),
+        url('Oddval-Regular.woff') format('woff'),
+        url('Oddval-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
