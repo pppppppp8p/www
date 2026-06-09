@@ -1,5 +1,18 @@
 # PPPPPPPP — Changelog
 
+## 2026-06-09 — v0.4 — Hero physics letters
+
+### Zmieniono
+- **HERO — nagłówek** — zastąpiono statyczny `.hero-type` przez 8 interaktywnych liter "P" (`.hero-letters` / `.hero-p`)
+  - Litery stoją nieruchomo nad głową Przema do czasu pierwszej interakcji
+  - Kursor w promieniu 140px odpycha literę (jak magnes) — aktywuje fizykę grawitacji
+  - Każda litera spada, odbija się od dołu hero (FLOOR_PAD=120px) i zostaje gdzie upadła
+  - Mobile: pierwsze `touchstart` rozrzuca wszystkie litery jednocześnie losowym impulsem
+  - Brak respawnu — interakcja jest nieodwracalna
+- **Kolorystyka liter** — 5× biały fill, 2× outlined (text-stroke biały), 1× orange, 1× violet
+- **CSS** — usunięto stare style `.hero-type`, `.hero-word`, `.hw-*`
+- **JS** — usunięto dead code `heroWords` + `speeds`; dodano samodzielne IIFE z fizyką (RAF loop, bez globalnego stanu)
+
 ## 2026-06-09 — v0.3 — Feedback round 2
 
 ### Usunięto

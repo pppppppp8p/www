@@ -55,9 +55,7 @@ document.querySelectorAll('.band-inner').forEach(inner => {
 });
 
 // ─── Scroll handler (parallax + scroll-driven band) ──────────
-const heroWords  = document.querySelectorAll('.hero-word');
 const heroPhoto  = document.querySelector('.hero-photo');
-const speeds     = [0.03, 0.08, 0.015, 0.10];
 const bandInners = document.querySelectorAll('.band-inner');
 const nav        = document.querySelector('nav');
 
@@ -65,9 +63,6 @@ window.addEventListener('scroll', () => {
   const y = window.scrollY;
 
   // Hero parallax
-  heroWords.forEach((el, i) => {
-    el.style.transform = `translateY(${-y * (speeds[i] || 0.05)}px)`;
-  });
   if (heroPhoto) heroPhoto.style.transform = `translateY(${-y * 0.05}px)`;
 
   // Scroll-driven band — moves only when user scrolls
@@ -96,17 +91,6 @@ const revealObs = new IntersectionObserver((entries) => {
 document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-stagger')
   .forEach(el => revealObs.observe(el));
 
-// ─── Hero headline entrance animation ────────────────────────
-document.querySelectorAll('.hero-word').forEach((el, i) => {
-  el.style.opacity   = '0';
-  el.style.transform = 'translateY(24px)';
-  el.style.transition = `opacity .65s ease ${i * .12 + .08}s, transform .65s ease ${i * .12 + .08}s`;
-  setTimeout(() => {
-    el.style.opacity   = '1';
-    el.style.transform = 'translateY(0)';
-  }, 60);
-});
-
 // ─── Accordion ───────────────────────────────────────────────
 document.querySelectorAll('.accordion-trigger').forEach(btn => {
   btn.addEventListener('click', () => {
@@ -116,3 +100,183 @@ document.querySelectorAll('.accordion-trigger').forEach(btn => {
     if (!isOpen) item.classList.add('open');
   });
 });
+
+// ─── Hero physics letters ─────────────────────────────────────
+(function () {
+  const GRAVITY    = 0.25;
+  const DAMPING    = 0.97;
+  const BOUNCE     = 0.38;
+  const REPEL_R    = 140;
+  const REPEL_STR  = 14;
+  const FLOOR_PAD  = 120;
+
+  const heroEl   = document.getElementById('hero');
+  const photoEl  = document.querySelector('.hero-photo');
+  const letterEls = Array.from(document.querySelectorAll('#hero .hero-p'));
+
+  if (!heroEl || !photoEl || letterEls.length === 0) return;
+
+  let heroMouseX = -9999;
+  let heroMouseY = -9999;
+  let letters    = [];
+  let rafId      = null;
+
+  // ── Position letters above photo head ──────────────────────
+  function initPhysics() {
+    const heroRect  = heroEl.getBoundingClientRect();
+    const heroW     = heroEl.offsetWidth;
+    const heroH     = heroEl.offsetHeight;
+    const photoRect = photoEl.getBoundingClientRect();
+
+    const photoCenterX = photoRect.left - heroRect.left + photoRect.width / 2;
+    const photoTopY    = photoRect.top  - heroRect.top;
+
+    const firstLetter  = letterEls[0];
+    firstLetter.style.opacity = '0';
+    firstLetter.style.transform = 'translate(0,0)';
+    const letterW = firstLetter.offsetWidth;
+    const letterH = firstLetter.offsetHeight;
+    const gap     = Math.round(letterW * 0.08);
+
+    const groupW  = letterEls.length * letterW + (letterEls.length - 1) * gap;
+    let   startX  = photoCenterX - groupW / 2;
+    startX = Math.max(0, Math.min(startX, heroW - groupW));
+    const startY  = photoTopY - letterH * 1.5;
+
+    letters = letterEls.map((el, i) => {
+      const x = startX + i * (letterW + gap);
+      const y = Math.max(0, startY);
+      el.style.transform = `translate(${x}px,${y}px)`;
+      return {
+        el,
+        x, y,
+        vx: 0, vy: 0,
+        homeX: x, homeY: y,
+        active: false,
+        w: letterW,
+        h: letterH
+      };
+    });
+
+    // Stagger fade-in
+    letters.forEach((lt, i) => {
+      setTimeout(() => { lt.el.style.opacity = '1'; }, i * 60 + 80);
+    });
+  }
+
+  // ── RAF tick ───────────────────────────────────────────────
+  function tick() {
+    const heroW = heroEl.offsetWidth;
+    const heroH = heroEl.offsetHeight;
+    const floor = heroH - FLOOR_PAD;
+
+    letters.forEach(lt => {
+      if (!lt.active) {
+        const cx   = lt.x + lt.w / 2;
+        const cy   = lt.y + lt.h / 2;
+        const dx   = cx - heroMouseX;
+        const dy   = cy - heroMouseY;
+        const dist = Math.hypot(dx, dy);
+        if (dist < REPEL_R && dist > 0) {
+          lt.active = true;
+          const mag = (1 - dist / REPEL_R) * REPEL_STR;
+          lt.vx = (dx / dist) * mag + (Math.random() - 0.5) * 1.5;
+          lt.vy = (dy / dist) * mag * 0.6 - (Math.random() * 2 + 1);
+        }
+        return;
+      }
+
+      // Cursor repulsion while in flight
+      const cx   = lt.x + lt.w / 2;
+      const cy   = lt.y + lt.h / 2;
+      const dx   = cx - heroMouseX;
+      const dy   = cy - heroMouseY;
+      const dist = Math.hypot(dx, dy);
+      if (dist < REPEL_R && dist > 0) {
+        const mag = (1 - dist / REPEL_R) * REPEL_STR * 0.5;
+        lt.vx += (dx / dist) * mag;
+        lt.vy += (dy / dist) * mag;
+      }
+
+      lt.vy += GRAVITY;
+      lt.vx *= DAMPING;
+      lt.vy *= DAMPING;
+      lt.x  += lt.vx;
+      lt.y  += lt.vy;
+
+      // Floor
+      if (lt.y + lt.h > floor) {
+        lt.y  = floor - lt.h;
+        lt.vy = -Math.abs(lt.vy) * BOUNCE;
+        lt.vx *= 0.78;
+        if (Math.abs(lt.vy) < 0.8) lt.vy = 0;
+      }
+      // Left wall
+      if (lt.x < 0) {
+        lt.x  = 0;
+        lt.vx = Math.abs(lt.vx) * 0.45;
+      }
+      // Right wall
+      if (lt.x + lt.w > heroW) {
+        lt.x  = heroW - lt.w;
+        lt.vx = -Math.abs(lt.vx) * 0.45;
+      }
+      // Ceiling
+      if (lt.y < 60) {
+        lt.y  = 60;
+        lt.vy = Math.abs(lt.vy) * 0.3;
+      }
+
+      lt.el.style.transform = `translate(${lt.x}px,${lt.y}px)`;
+    });
+
+    rafId = requestAnimationFrame(tick);
+  }
+
+  // ── Mouse tracking (relative to heroEl) ───────────────────
+  document.addEventListener('mousemove', e => {
+    const rect = heroEl.getBoundingClientRect();
+    heroMouseX = e.clientX - rect.left;
+    heroMouseY = e.clientY - rect.top;
+  });
+
+  // ── Mobile: one tap scatters all ──────────────────────────
+  heroEl.addEventListener('touchstart', () => {
+    letters.forEach(lt => {
+      if (!lt.active) {
+        lt.active = true;
+        lt.vx = (Math.random() - 0.5) * 20;
+        lt.vy = -(Math.random() * 8 + 4);
+      }
+    });
+  }, { once: true });
+
+  // ── Resize ────────────────────────────────────────────────
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      const heroW = heroEl.offsetWidth;
+      const heroH = heroEl.offsetHeight;
+      const floor = heroH - FLOOR_PAD;
+      const allInactive = letters.every(lt => !lt.active);
+      if (allInactive) {
+        initPhysics();
+      } else {
+        letters.forEach(lt => {
+          if (lt.x + lt.w > heroW) lt.x = heroW - lt.w;
+          if (lt.x < 0) lt.x = 0;
+          if (lt.y + lt.h > floor) lt.y = floor - lt.h;
+          lt.el.style.transform = `translate(${lt.x}px,${lt.y}px)`;
+        });
+      }
+    }, 200);
+  });
+
+  // ── Boot ──────────────────────────────────────────────────
+  window.addEventListener('load', () => {
+    if (rafId) cancelAnimationFrame(rafId);
+    initPhysics();
+    rafId = requestAnimationFrame(tick);
+  });
+})();

@@ -185,56 +185,42 @@ nav.scrolled {
   z-index: 0;
 }
 
-/* Giant type composition — right half of screen, editorial magazine */
-.hero-type {
-  position: relative;
+/* ============================================================
+   HERO — Interactive P letters
+   ============================================================ */
+.hero-letters {
+  position: absolute;
+  inset: 0;
   z-index: 4;
-  padding: 120px 0 0;
   pointer-events: none;
-  user-select: none;
-  text-align: right;
+  overflow: hidden;
 }
 
-.hero-word {
-  display: block;
+.hero-p {
+  position: absolute;
+  left: 0;
+  top: 0;
   font-family: var(--font-display);
-  font-weight: 700;
+  font-weight: 900;
+  font-size: clamp(56px, 9vw, 140px);
   text-transform: uppercase;
-  line-height: .88;
-  letter-spacing: -.03em;
+  line-height: 1;
+  letter-spacing: -.02em;
+  user-select: none;
+  pointer-events: none;
   will-change: transform;
-}
-
-/* Line 1: POMAGAM — right-aligned, massive */
-.hw-1 {
-  font-size: clamp(70px, 12.5vw, 182px);
+  opacity: 0;
   color: var(--white);
-  padding-right: 40px;
 }
 
-/* Line 2: MARKOM — outlined, slightly inset */
-.hw-2 {
-  font-size: clamp(70px, 12.5vw, 182px);
+/* Alternating color variants — brand palette */
+.hero-p:nth-child(2),
+.hero-p:nth-child(5) {
   color: transparent;
   -webkit-text-stroke: 2px var(--white);
-  padding-right: clamp(40px, 6vw, 120px);
 }
-
-/* Line 3: BYĆ TAKIMI, — muted, right */
-.hw-3 {
-  font-size: clamp(34px, 6vw, 88px);
-  color: var(--grey-mid);
-  padding-right: 40px;
-  margin-top: .06em;
-}
-
-/* Line 4: O KTÓRYCH SIĘ MÓWI. — orange, right */
-.hw-4 {
-  font-size: clamp(34px, 6vw, 88px);
-  color: var(--orange);
-  padding-right: 40px;
-  margin-top: .04em;
-}
+.hero-p:nth-child(4) { color: var(--orange); }
+.hero-p:nth-child(7) { color: var(--violet); }
 
 /* Przemo photo — left side, full bleed, editorial magazine */
 .hero-photo {
@@ -871,10 +857,6 @@ nav.scrolled {
   nav { padding: 18px 20px; }
   .nav-links .btn-nav { display: none; }
 
-  .hw-1, .hw-2 { font-size: clamp(44px, 13vw, 100px); }
-  .hw-3, .hw-4 { font-size: clamp(24px, 7.5vw, 56px); }
-  .hero-type { text-align: left; padding: 120px 20px 0; }
-  .hw-1, .hw-2, .hw-3, .hw-4 { padding-right: 20px; padding-left: 0; }
   .hero-photo { height: clamp(220px, 38vw, 360px); left: auto; right: 0; opacity: .35; }
   .hero-bottom { grid-template-columns: 1fr; padding: 24px 20px 0; }
   .hero-quote { display: none; }
@@ -893,8 +875,6 @@ nav.scrolled {
 }
 
 @media (max-width: 480px) {
-  .hw-1, .hw-2 { font-size: clamp(36px, 14vw, 72px); }
-  .hw-3, .hw-4 { font-size: clamp(20px, 8vw, 40px); }
   .hero-cta { flex-direction: column; align-items: flex-start; }
   .hero-photo { opacity: .18; height: clamp(160px, 50vw, 280px); }
 }
