@@ -64,7 +64,9 @@ body {
   overflow-x: hidden;
   cursor: none;
 }
-a { color: inherit; text-decoration: none; }
+a { color: inherit; text-decoration: none; cursor: none; }
+a:focus-visible { outline: 2px solid var(--orange); outline-offset: 3px; }
+button { cursor: none; }
 img { display: block; max-width: 100%; }
 
 /* ============================================================
@@ -85,8 +87,24 @@ img { display: block; max-width: 100%; }
   position: absolute;
   background: var(--orange);
 }
-#cursor::before { top: 0; left: 6px; width: 4px; height: 16px; }
-#cursor::after  { top: 6px; left: 0; width: 16px; height: 4px; }
+#cursor::before {
+  top: 0; left: 6px; width: 4px; height: 16px;
+  transition: background .12s, width .12s, height .12s, top .12s, left .12s;
+}
+#cursor::after  {
+  top: 6px; left: 0; width: 16px; height: 4px;
+  transition: background .12s, width .12s, height .12s, top .12s, left .12s;
+}
+
+/* Cursor hover state — larger cross, white color */
+#cursor.cursor--hover::before {
+  background: var(--white);
+  top: -4px; left: 4px; width: 4px; height: 24px;
+}
+#cursor.cursor--hover::after {
+  background: var(--white);
+  top: 4px; left: -4px; width: 24px; height: 4px;
+}
 
 /* ============================================================
    NAV
@@ -167,13 +185,14 @@ nav.scrolled {
   z-index: 0;
 }
 
-/* Giant type composition */
+/* Giant type composition — right half of screen, editorial magazine */
 .hero-type {
   position: relative;
-  z-index: 2;
-  padding: 80px 0 0;
+  z-index: 4;
+  padding: 120px 0 0;
   pointer-events: none;
   user-select: none;
+  text-align: right;
 }
 
 .hero-word {
@@ -186,49 +205,47 @@ nav.scrolled {
   will-change: transform;
 }
 
-/* Line 1: POMAGAM — left */
+/* Line 1: POMAGAM — right-aligned, massive */
 .hw-1 {
-  font-size: clamp(72px, 13vw, 190px);
+  font-size: clamp(70px, 12.5vw, 182px);
   color: var(--white);
-  padding-left: 40px;
-}
-
-/* Line 2: MARKOM — right, slightly overlapping */
-.hw-2 {
-  font-size: clamp(72px, 13vw, 190px);
-  color: transparent;
-  -webkit-text-stroke: 2px var(--white);
-  text-align: right;
   padding-right: 40px;
 }
 
-/* Line 3: BYĆ TAKIMI, — center-left, smaller */
+/* Line 2: MARKOM — outlined, slightly inset */
+.hw-2 {
+  font-size: clamp(70px, 12.5vw, 182px);
+  color: transparent;
+  -webkit-text-stroke: 2px var(--white);
+  padding-right: clamp(40px, 6vw, 120px);
+}
+
+/* Line 3: BYĆ TAKIMI, — muted, right */
 .hw-3 {
-  font-size: clamp(36px, 6.5vw, 96px);
+  font-size: clamp(34px, 6vw, 88px);
   color: var(--grey-mid);
-  padding-left: clamp(40px, 7vw, 140px);
-  margin-top: .08em;
+  padding-right: 40px;
+  margin-top: .06em;
 }
 
 /* Line 4: O KTÓRYCH SIĘ MÓWI. — orange, right */
 .hw-4 {
-  font-size: clamp(36px, 6.5vw, 96px);
+  font-size: clamp(34px, 6vw, 88px);
   color: var(--orange);
-  text-align: right;
   padding-right: 40px;
-  margin-top: .05em;
+  margin-top: .04em;
 }
 
-/* Przemo photo - anchored in middle of composition */
+/* Przemo photo — left side, full bleed, editorial magazine */
 .hero-photo {
   position: absolute;
-  right: clamp(40px, 8vw, 160px);
+  left: clamp(-10px, 1vw, 20px);
   bottom: 0;
-  height: clamp(280px, 44vw, 540px);
+  height: clamp(340px, 58vw, 700px);
   width: auto;
-  z-index: 3;
+  z-index: 2;
   pointer-events: none;
-  filter: contrast(1.08);
+  filter: contrast(1.06);
 }
 
 /* Pixel spray decorative images scattered in hero */
@@ -285,6 +302,17 @@ nav.scrolled {
 @keyframes marquee {
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }
+}
+
+/* Gradient fade at bottom — ensures CTA text readable over photo */
+#hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 300px;
+  background: linear-gradient(to top, var(--black) 20%, transparent 100%);
+  z-index: 3;
+  pointer-events: none;
 }
 
 /* Bottom strip: subline + CTA */
@@ -378,30 +406,26 @@ nav.scrolled {
 
 .band-inner {
   display: flex;
-  gap: 40px;
+  gap: 32px;
   white-space: nowrap;
-  animation: band-scroll 14s linear infinite;
+  will-change: transform;
 }
 .band-inner span {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: clamp(16px, 2.2vw, 28px);
+  font-size: clamp(10px, 1.25vw, 14px);
   text-transform: uppercase;
-  letter-spacing: .06em;
+  letter-spacing: .09em;
   color: var(--black);
   flex-shrink: 0;
   display: flex;
   align-items: center;
-  gap: 24px;
+  gap: 20px;
 }
 .band-inner span::after {
   content: '●';
-  font-size: .5em;
-  opacity: .5;
-}
-@keyframes band-scroll {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
+  font-size: .6em;
+  opacity: .45;
 }
 
 /* ============================================================
@@ -471,66 +495,6 @@ nav.scrolled {
   flex-shrink: 0;
 }
 
-/* ============================================================
-   SEKCJA 02 — SINGLE STATEMENT
-   ============================================================ */
-#statement {
-  background: var(--violet);
-  padding: 100px 40px;
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-}
-
-/* Corner sprays — density at corners, dispersing inward */
-.statement .spray-img {
-  position: absolute;
-  width: 180px;
-  height: 180px;
-  object-fit: contain;
-  pointer-events: none;
-  opacity: .28;
-}
-.statement .spray-img--tl {
-  top: 0; left: 0;
-  transform: rotate(180deg) scaleX(-1); /* density top-left */
-}
-.statement .spray-img--br {
-  bottom: 0; right: 0;
-  /* density bottom-right — original */
-}
-
-.statement-quote {
-  position: relative;
-  z-index: 1;
-  max-width: 640px;
-  width: 100%;
-  text-align: center;
-}
-.statement-quote p {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: clamp(28px, 5vw, 64px);
-  text-transform: uppercase;
-  line-height: .95;
-  letter-spacing: -.02em;
-  color: var(--black);
-  margin-bottom: 36px;
-}
-.statement-quote p em {
-  font-style: normal;
-  color: var(--white);
-}
-.statement-quote cite {
-  font-family: var(--font-body);
-  font-size: 13px;
-  letter-spacing: .15em;
-  text-transform: uppercase;
-  color: var(--black);
-  opacity: .5;
-  font-style: normal;
-}
 
 /* ============================================================
    SEKCJA 03 — SZYBKA ORIENTACJA
@@ -549,35 +513,45 @@ nav.scrolled {
   margin-bottom: 60px;
 }
 
-/* Brand card — pixel border + sharp shadow */
+/* Brand card — organic SVG blob shape */
 .card {
-  background: var(--black);
-  border: 2px solid rgba(250, 247, 249, 0.18);
-  border-radius: var(--radius);
-  box-shadow: 6px 6px 0 rgba(250, 247, 249, 0.1);
-  padding: 40px 32px 44px;
   position: relative;
-  overflow: hidden;
-  transition: transform .2s, box-shadow .2s, border-color .2s;
+  display: block;
+  transition: transform .22s cubic-bezier(.34,1.38,.64,1), filter .22s ease;
+  filter: drop-shadow(6px 8px 0 rgba(124,96,236,.25));
 }
 .card:hover {
-  transform: translate(-5px, -5px);
-  box-shadow: 11px 11px 0 var(--orange);
-  border-color: var(--orange);
+  transform: translateY(-12px);
+  filter: drop-shadow(8px 20px 0 var(--orange));
 }
 
-/* Spray inside card — density at top-right corner, disperses toward center */
-.card::before {
+/* SVG blob shape fills the card */
+.card-shape {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none;
+}
+
+/* Card content sits above the SVG */
+.card-inner {
+  position: relative;
+  z-index: 1;
+  padding: 40px 32px 48px;
+}
+
+/* Spray in top-right of card inner */
+.card-inner::before {
   content: '';
   position: absolute;
   top: 0; right: 0;
-  width: 110px; height: 110px;
+  width: 90px; height: 90px;
   background-image: url('../assets/corner-spray-violet.png');
   background-size: cover;
-  border-radius: 0 var(--radius) 0 0;
-  opacity: .18;
+  opacity: .14;
   pointer-events: none;
-  /* The corner-spray asset has density at top-right — fits perfectly */
 }
 
 .card-num {
@@ -829,6 +803,7 @@ nav.scrolled {
   color: var(--white);
   transition: color .2s;
 }
+.accordion-trigger:hover .accordion-trigger-text { color: var(--grey-mid); }
 .accordion-item.open .accordion-trigger-text { color: var(--orange); }
 
 .accordion-arrow {
@@ -896,14 +871,13 @@ nav.scrolled {
   nav { padding: 18px 20px; }
   .nav-links .btn-nav { display: none; }
 
-  .hw-1, .hw-2 { font-size: clamp(52px, 15vw, 120px); }
-  .hw-3, .hw-4 { font-size: clamp(28px, 8vw, 60px); }
-  .hero-photo { height: clamp(220px, 40vw, 380px); right: 20px; }
+  .hw-1, .hw-2 { font-size: clamp(44px, 13vw, 100px); }
+  .hw-3, .hw-4 { font-size: clamp(24px, 7.5vw, 56px); }
+  .hero-type { text-align: left; padding: 120px 20px 0; }
+  .hw-1, .hw-2, .hw-3, .hw-4 { padding-right: 20px; padding-left: 0; }
+  .hero-photo { height: clamp(220px, 38vw, 360px); left: auto; right: 0; opacity: .35; }
   .hero-bottom { grid-template-columns: 1fr; padding: 24px 20px 0; }
   .hero-quote { display: none; }
-
-  #statement { padding: 72px 24px; }
-  .statement-quote { max-width: 100%; }
 
   #orientation .section-inner { padding: 0 20px; }
   .orientation-grid { grid-template-columns: 1fr; gap: 12px; }
@@ -919,8 +893,8 @@ nav.scrolled {
 }
 
 @media (max-width: 480px) {
-  .hw-1, .hw-2 { font-size: clamp(42px, 17vw, 80px); }
-  .hw-3, .hw-4 { font-size: clamp(22px, 8.5vw, 44px); }
+  .hw-1, .hw-2 { font-size: clamp(36px, 14vw, 72px); }
+  .hw-3, .hw-4 { font-size: clamp(20px, 8vw, 40px); }
   .hero-cta { flex-direction: column; align-items: flex-start; }
-  .hero-photo { height: clamp(180px, 55vw, 300px); }
+  .hero-photo { opacity: .18; height: clamp(160px, 50vw, 280px); }
 }

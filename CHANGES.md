@@ -1,5 +1,27 @@
 # PPPPPPPP — Changelog
 
+## 2026-06-09 — v0.3 — Feedback round 2
+
+### Usunięto
+- **Sekcja 02 (Statement)** — kompletnie wypierdolona z HTML i CSS
+- Stary scroll handler bandy (był zepsuty)
+
+### Zmieniono
+- **HERO — foto** — z prawej strony → lewa, duże (do 58vw), editorial magazine layout; tekst right-aligned; gradient fade na dole zapewnia czytelność CTA
+- **BAND (orange)** — usunięto auto-animation; tekst porusza się TYLKO przy scrollowaniu (scroll-driven via JS modulo loop); nowy tekst: brand experience · total experience · experience design · customer experience · service design · system thinking · marketing i strategy; font mniejszy (clamp 10–14px)
+- **BAND (violet)** — również scroll-driven (idx=1 → odwrotny kierunek)
+- **Kursor** — instant follow (bezpośrednio z mousemove, bez lagującego lerp 0.18); po najechaniu na `a`/`button` zmienia się na większy krzyż biały, system hand cursor nigdy nie pojawia
+- **Karty (Sekcja 03)** — organiczne SVG blob shapes zamiast border-radius:
+  - Card 1: ukośne ucięcie top-left + wypustka po prawej (środek)
+  - Card 2: dwie wypustki po prawej stronie
+  - Card 3: ukośne ucięcie top-right + wypustka po prawej (niżej)
+  - Hover: `translateY(-12px)` + `filter: drop-shadow` w kolorze orange (card unosi się)
+- **Accordion hover** — dodany hover state na trigger
+
+### Dodano
+- `cursor: none` na wszystkich `a` i `button` (brak systemowej rączki)
+- Focus-visible outline dla dostępności klawiaturowej
+
 ## 2026-06-09 — v0.2 — Redesign hero + sekcje 4 i 5
 
 ### Zmieniono
