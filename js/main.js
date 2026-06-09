@@ -2,161 +2,140 @@
    PPPPPPPP — main.js
    ============================================================ */
 
-// Custom cursor
-const cursor = document.querySelector('.cursor');
+// ─── Custom cursor ───────────────────────────────────────────
+const cursor = document.getElementById('cursor');
+let cursorX = 0, cursorY = 0, cx = 0, cy = 0;
 
 document.addEventListener('mousemove', e => {
-  cursor.style.left = e.clientX + 'px';
-  cursor.style.top  = e.clientY + 'px';
+  cursorX = e.clientX;
+  cursorY = e.clientY;
 });
 
-document.addEventListener('mouseleave', () => {
-  cursor.style.opacity = '0';
-});
+const animateCursor = () => {
+  cx += (cursorX - cx) * 0.18;
+  cy += (cursorY - cy) * 0.18;
+  if (cursor) cursor.style.transform = `translate(calc(${cx}px - 50%), calc(${cy}px - 50%))`;
+  requestAnimationFrame(animateCursor);
+};
+animateCursor();
 
-document.addEventListener('mouseenter', () => {
-  cursor.style.opacity = '1';
-});
+// ─── Pixel spray canvas — background texture ─────────────────
+const sprayCanvas = document.getElementById('spray-canvas');
+if (sprayCanvas) {
+  const ctx = sprayCanvas.getContext('2d');
 
-// ============================================================
-// Fog of War — canvas overlay on hero
-// ============================================================
-const fogCanvas = document.getElementById('fog-canvas');
-const fogCtx    = fogCanvas ? fogCanvas.getContext('2d') : null;
-
-let fogMouse = { x: -999, y: -999 };
-let fogRadius  = 0;
-let fogTargetR = 0;
-const FOG_RADIUS_MAX  = 200;
-
-if (fogCanvas) {
-  const resizeFog = () => {
-    fogCanvas.width  = fogCanvas.offsetWidth;
-    fogCanvas.height = fogCanvas.offsetHeight;
-  };
-  resizeFog();
-  window.addEventListener('resize', resizeFog);
-
-  const hero = document.getElementById('hero');
-
-  hero.addEventListener('mousemove', e => {
-    const rect = fogCanvas.getBoundingClientRect();
-    fogMouse.x = e.clientX - rect.left;
-    fogMouse.y = e.clientY - rect.top;
-    fogTargetR = FOG_RADIUS_MAX;
-  });
-
-  hero.addEventListener('mouseleave', () => {
-    fogTargetR = 0;
-  });
-
-  const drawFog = () => {
-    if (!fogCtx) return;
-
-    // Smooth radius
-    fogRadius += (fogTargetR - fogRadius) * 0.08;
-
-    fogCtx.clearRect(0, 0, fogCanvas.width, fogCanvas.height);
-
-    // Dark overlay
-    fogCtx.fillStyle = 'rgba(36, 27, 33, 0.72)';
-    fogCtx.fillRect(0, 0, fogCanvas.width, fogCanvas.height);
-
-    // Cut out circle at mouse — radial gradient to transparent
-    const grad = fogCtx.createRadialGradient(
-      fogMouse.x, fogMouse.y, 0,
-      fogMouse.x, fogMouse.y, fogRadius
-    );
-    grad.addColorStop(0,   'rgba(36, 27, 33, 0)');
-    grad.addColorStop(0.6, 'rgba(36, 27, 33, 0)');
-    grad.addColorStop(1,   'rgba(36, 27, 33, 0.72)');
-
-    fogCtx.globalCompositeOperation = 'destination-out';
-    fogCtx.beginPath();
-    fogCtx.arc(fogMouse.x, fogMouse.y, fogRadius, 0, Math.PI * 2);
-    fogCtx.fillStyle = grad;
-    fogCtx.fill();
-    fogCtx.globalCompositeOperation = 'source-over';
-
-    requestAnimationFrame(drawFog);
+  const resize = () => {
+    sprayCanvas.width  = sprayCanvas.offsetWidth;
+    sprayCanvas.height = sprayCanvas.offsetHeight;
+    drawSpray();
   };
 
-  drawFog();
+  const drawSpray = () => {
+    ctx.clearRect(0, 0, sprayCanvas.width, sprayCanvas.height);
+
+    const colors = ['#FE5200', '#7C60EC'];
+    const count  = Math.floor(sprayCanvas.width * sprayCanvas.height / 3200);
+
+    for (let i = 0; i < count; i++) {
+      const x    = Math.random() * sprayCanvas.width;
+      const y    = Math.random() * sprayCanvas.height;
+      const size = Math.random() < 0.75 ? 2 : 4;
+      const col  = colors[Math.random() < 0.6 ? 0 : 1];
+      const alpha = Math.random() * 0.18 + 0.03;
+
+      ctx.globalAlpha = alpha;
+      ctx.fillStyle   = col;
+      ctx.fillRect(Math.round(x / 2) * 2, Math.round(y / 2) * 2, size, size);
+    }
+    ctx.globalAlpha = 1;
+  };
+
+  resize();
+  window.addEventListener('resize', resize);
 }
 
-// ============================================================
-// Scroll-driven ticker — horizontal movement on scroll
-// ============================================================
-const ticker = document.querySelector('.hero-ticker-inner');
+// ─── Hero parallax on scroll ──────────────────────────────────
+const heroWords = document.querySelectorAll('.hero-word');
+const heroPhoto = document.querySelector('.hero-photo');
+const speeds    = [0.04, 0.10, 0.02, 0.13]; // each line moves at different rate
 
-if (ticker) {
-  // Duplicate content for seamless loop
-  ticker.innerHTML += ticker.innerHTML;
+const onScroll = () => {
+  const y = window.scrollY;
 
-  let scrollY = 0;
-
-  window.addEventListener('scroll', () => {
-    scrollY = window.scrollY;
-    // Slow the animation on scroll (parallax feel)
-    ticker.style.animationPlayState = 'running';
+  heroWords.forEach((el, i) => {
+    const speed = speeds[i] || 0.05;
+    el.style.transform = `translateY(${-y * speed}px)`;
   });
-}
 
-// ============================================================
-// Scroll reveal — IntersectionObserver
-// ============================================================
-const revealEls = document.querySelectorAll('.reveal, .reveal-stagger');
+  if (heroPhoto) {
+    heroPhoto.style.transform = `translateY(${-y * 0.06}px)`;
+  }
+};
 
-const revealObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-      revealObserver.unobserve(entry.target);
+window.addEventListener('scroll', onScroll, { passive: true });
+
+// ─── Nav glass on scroll ──────────────────────────────────────
+const nav = document.querySelector('nav');
+window.addEventListener('scroll', () => {
+  nav?.classList.toggle('scrolled', window.scrollY > 60);
+}, { passive: true });
+
+// ─── Scroll reveal (IntersectionObserver) ────────────────────
+const reveals = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-stagger');
+const revealObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      revealObs.unobserve(e.target);
     }
   });
-}, { threshold: 0.12 });
+}, { threshold: 0.1 });
 
-revealEls.forEach(el => revealObserver.observe(el));
+reveals.forEach(el => revealObs.observe(el));
 
-// ============================================================
-// Hero headline — word-by-word entrance
-// ============================================================
-const heroHeadline = document.querySelector('.hero-headline');
+// ─── Hero headline word entrance ─────────────────────────────
+const heroWordEls = document.querySelectorAll('.hero-word');
+heroWordEls.forEach((el, i) => {
+  el.style.opacity = '0';
+  el.style.transform += ' translateY(30px)';
+  el.style.transition = `opacity .7s ease ${i * .1 + .1}s, transform .7s ease ${i * .1 + .1}s`;
 
-if (heroHeadline) {
-  const words = heroHeadline.textContent.trim().split(/\s+/);
-  heroHeadline.innerHTML = words.map((w, i) =>
-    `<span class="hw" style="
-      display:inline-block;
-      opacity:0;
-      transform:translateY(20px);
-      animation: wordIn .6s ease forwards;
-      animation-delay: ${i * 0.07 + 0.2}s
-    ">${w}&nbsp;</span>`
-  ).join('');
+  setTimeout(() => {
+    el.style.opacity = '1';
+    el.style.transform = el.style.transform.replace(' translateY(30px)', '');
+  }, 50);
+});
+
+// ─── Accordion ───────────────────────────────────────────────
+document.querySelectorAll('.accordion-trigger').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const item   = btn.closest('.accordion-item');
+    const isOpen = item.classList.contains('open');
+
+    // Close all
+    document.querySelectorAll('.accordion-item.open').forEach(i => i.classList.remove('open'));
+
+    // Open clicked (if wasn't open)
+    if (!isOpen) item.classList.add('open');
+  });
+});
+
+// ─── Duplicate marquee bands for seamless loop ───────────────
+document.querySelectorAll('.band-inner').forEach(inner => {
+  inner.innerHTML += inner.innerHTML;
+});
+
+// ─── Scroll-reverse the orange band between hero and section 2 ─
+const bandEl = document.querySelector('.band .band-inner');
+if (bandEl) {
+  const hero = document.getElementById('hero');
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    const heroH = hero ? hero.offsetHeight : 0;
+    if (y < heroH + 200) {
+      // Counter-scroll the band slightly
+      const base = parseFloat(bandEl.style.marginLeft || '0');
+      bandEl.style.animationDuration = `${Math.max(6, 14 - y * 0.01)}s`;
+    }
+  }, { passive: true });
 }
-
-const styleEl = document.createElement('style');
-styleEl.textContent = `
-  @keyframes wordIn {
-    to { opacity: 1; transform: translateY(0); }
-  }
-`;
-document.head.appendChild(styleEl);
-
-// ============================================================
-// Nav transparency on scroll
-// ============================================================
-const nav = document.querySelector('nav');
-
-window.addEventListener('scroll', () => {
-  if (window.scrollY > 60) {
-    nav.style.background = 'rgba(36, 27, 33, 0.92)';
-    nav.style.backdropFilter = 'blur(12px)';
-    nav.style.borderBottom = '1px solid rgba(250, 247, 249, 0.07)';
-  } else {
-    nav.style.background = 'transparent';
-    nav.style.backdropFilter = 'none';
-    nav.style.borderBottom = 'none';
-  }
-}, { passive: true });

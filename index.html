@@ -9,14 +9,13 @@
 </head>
 <body>
 
-  <!-- Cursor -->
-  <div class="cursor" id="cursor" aria-hidden="true"></div>
+  <div id="cursor" aria-hidden="true"></div>
 
-  <!-- ======================================================
+  <!-- =========================================================
        NAV
-       ====================================================== -->
+       ========================================================= -->
   <nav>
-    <a href="/" class="nav-logo" aria-label="PPPPPPPP — strona główna">
+    <a href="/" class="nav-logo" aria-label="PPPPPPPP strona główna">
       <img src="assets/logo-main.png" alt="PPPPPPPP" />
     </a>
     <div class="nav-links">
@@ -25,90 +24,107 @@
     </div>
   </nav>
 
-  <!-- ======================================================
+  <!-- =========================================================
        SEKCJA 01 — HERO
-       ====================================================== -->
-  <section id="hero" aria-label="Hero">
+       ========================================================= -->
+  <section id="hero">
 
-    <!-- Fog of war canvas -->
-    <canvas id="fog-canvas" aria-hidden="true"></canvas>
+    <!-- Pixel spray canvas — scattered background texture -->
+    <canvas id="spray-canvas" aria-hidden="true"></canvas>
 
-    <!-- Orange left stripe -->
-    <div class="hero-stripe" aria-hidden="true">
-      <span class="hero-stripe-text">Strateg&nbsp;doświadczeń&nbsp;·&nbsp;Konsultant&nbsp;·&nbsp;Facylitator</span>
-    </div>
+    <!-- Spray decorations -->
+    <img src="assets/corner-spray-orange.png" class="hero-spray hero-spray--tl" alt="" aria-hidden="true" />
+    <img src="assets/corner-spray-violet.png" class="hero-spray hero-spray--br" alt="" aria-hidden="true" />
 
-    <!-- PPPPPPPP watermark -->
-    <div class="hero-watermark" aria-hidden="true">PPPPPPPP</div>
-
-    <!-- Scrolling ticker -->
-    <div class="hero-ticker" aria-hidden="true">
-      <div class="hero-ticker-inner">
-        <span>EXPERIENCES</span>
-        <span>·</span>
-        <span>BRAND</span>
-        <span>·</span>
-        <span>STRATEGY</span>
+    <!-- Counter-scrolling background marquee -->
+    <div class="hero-marquee" aria-hidden="true">
+      <div class="hero-marquee-inner">
+        <span>PPPPPPPP</span>
         <span>·</span>
         <span>PPPPPPPP</span>
         <span>·</span>
-        <span>EXPERIENCES</span>
+        <span>PPPPPPPP</span>
         <span>·</span>
-        <span>BRAND</span>
+        <span>PPPPPPPP</span>
         <span>·</span>
-        <span>STRATEGY</span>
+        <span>PPPPPPPP</span>
+        <span>·</span>
+        <span>PPPPPPPP</span>
+        <span>·</span>
+        <span>PPPPPPPP</span>
         <span>·</span>
         <span>PPPPPPPP</span>
         <span>·</span>
       </div>
     </div>
 
-    <!-- Pixel spray corners -->
-    <img src="assets/corner-spray-orange.png" class="spray-corner spray-corner--tr" alt="" aria-hidden="true" />
-    <img src="assets/corner-spray-violet.png" class="spray-corner spray-corner--br" alt="" aria-hidden="true" />
-
-    <!-- Photo -->
-    <img src="assets/photo.png" class="hero-photo" alt="Przemo" />
-
-    <!-- Main content -->
-    <div class="hero-content">
-      <p class="hero-sub">Przemo&nbsp;·&nbsp;Strateg doświadczeń&nbsp;·&nbsp;Konsultant&nbsp;·&nbsp;Facylitator</p>
-      <h1 class="hero-headline">
-        Pomagam markom<br />
-        być takimi,<br />
-        <mark>o których się mówi.</mark>
-      </h1>
-      <div class="hero-cta">
-        <a href="uslugi.html#kontakt" class="btn btn--primary">
-          Umów spotkanie
-          <img src="assets/arrow-white.png" alt="" aria-hidden="true" />
-        </a>
-        <a href="#orientation" class="btn btn--ghost">
-          Co robię
-        </a>
-      </div>
+    <!-- Giant editorial typography -->
+    <div class="hero-type" aria-hidden="true">
+      <span class="hero-word hw-1">Pomagam</span>
+      <span class="hero-word hw-2">Markom</span>
+      <span class="hero-word hw-3">Być takimi,</span>
+      <span class="hero-word hw-4">o których się mówi.</span>
     </div>
 
-    <!-- Floating quote -->
-    <aside class="hero-quote" aria-label="Opinia klienta">
-      <blockquote>
-        „Nigdy nie przeżyliśmy takich warsztatów."
-        <cite>— klient, branża kreatywna</cite>
-      </blockquote>
-    </aside>
+    <!-- Przemo's photo -->
+    <img src="assets/photo.png" class="hero-photo" alt="Przemo — strateg doświadczeń" />
+
+    <!-- Bottom: subline + CTA + quote -->
+    <div class="hero-bottom">
+      <div>
+        <p class="hero-sub">Przemo&nbsp;·&nbsp;Strateg doświadczeń&nbsp;·&nbsp;Konsultant&nbsp;·&nbsp;Facylitator</p>
+        <div class="hero-cta">
+          <a href="uslugi.html#kontakt" class="btn btn--primary">
+            Umów spotkanie
+            <img src="assets/arrow-white.png" alt="" aria-hidden="true" />
+          </a>
+          <a href="#orientation" class="btn btn--ghost">
+            Co robię
+          </a>
+        </div>
+      </div>
+      <aside class="hero-quote" aria-label="Opinia klienta">
+        <blockquote>
+          „Nigdy nie przeżyliśmy takich warsztatów."
+          <cite>— klient, branża kreatywna</cite>
+        </blockquote>
+      </aside>
+    </div>
+
+    <!-- Scroll indicator -->
+    <div class="scroll-hint" aria-hidden="true">
+      <span>Scroll</span>
+      <div class="scroll-hint-line"></div>
+    </div>
 
   </section>
 
-  <!-- ======================================================
+  <!-- =========================================================
+       BAND — scrolling orange separator
+       ========================================================= -->
+  <div class="band" aria-hidden="true">
+    <div class="band-inner">
+      <span>Strateg doświadczeń</span>
+      <span>Brand experience</span>
+      <span>Warsztaty</span>
+      <span>Facylitacja</span>
+      <span>Konsultacje</span>
+      <span>Customer journey</span>
+      <span>Strateg doświadczeń</span>
+      <span>Brand experience</span>
+      <span>Warsztaty</span>
+      <span>Facylitacja</span>
+      <span>Konsultacje</span>
+      <span>Customer journey</span>
+    </div>
+  </div>
+
+  <!-- =========================================================
        SEKCJA 02 — SINGLE STATEMENT
-       ====================================================== -->
-  <section id="statement" aria-label="Cytat">
-
-    <div class="statement-noise" aria-hidden="true"></div>
-
-    <!-- Corner sprays -->
-    <img src="assets/corner-spray-white.png" class="statement-spray-tl" alt="" aria-hidden="true" />
-    <img src="assets/corner-spray-white.png" class="statement-spray-br" alt="" aria-hidden="true" />
+       ========================================================= -->
+  <section id="statement">
+    <img src="assets/corner-spray-white.png" class="spray-img spray-img--tl" alt="" aria-hidden="true" />
+    <img src="assets/corner-spray-white.png" class="spray-img spray-img--br" alt="" aria-hidden="true" />
 
     <div class="statement-quote reveal">
       <p>
@@ -118,57 +134,159 @@
       </p>
       <cite>— Maya Angelou</cite>
     </div>
-
   </section>
 
-  <!-- ======================================================
+  <!-- =========================================================
        SEKCJA 03 — SZYBKA ORIENTACJA
-       ====================================================== -->
-  <section id="orientation" aria-labelledby="orientation-label">
-
-    <!-- Background decoration -->
+       ========================================================= -->
+  <section id="orientation">
     <div class="orientation-bg" aria-hidden="true">
-      <span>PPPPPPPP&nbsp;PPPPPPPP&nbsp;PPPPPPPP&nbsp;PPPPPPPP&nbsp;PPPPPPPP&nbsp;PPPPPPPP</span>
+      <span>PPPPPPPP&nbsp;&nbsp;PPPPPPPP&nbsp;&nbsp;PPPPPPPP&nbsp;&nbsp;PPPPPPPP&nbsp;&nbsp;PPPPPPPP</span>
     </div>
 
-    <p class="section-label reveal" id="orientation-label">Czym się zajmuję</p>
+    <div class="section-inner">
+      <p class="section-label reveal" id="orientation-label">Czym się zajmuję</p>
 
-    <div class="orientation-grid reveal-stagger">
+      <div class="orientation-grid reveal-stagger">
+        <article class="card">
+          <img src="assets/num-1.png" class="card-num" alt="01" />
+          <h3 class="card-title">Warsztaty<br />i strategia</h3>
+          <p class="card-body">Wyciągam z twojego zespołu to, co już w nim jest — i pomagam to zamienić w strategię.</p>
+        </article>
+        <article class="card">
+          <img src="assets/num-2.png" class="card-num" alt="02" />
+          <h3 class="card-title">Projektowanie<br />doświadczeń</h3>
+          <p class="card-body">Każdy punkt styku z klientem ma znaczenie. Projektuję, żeby te punkty coś budowały.</p>
+        </article>
+        <article class="card">
+          <img src="assets/num-3.png" class="card-num" alt="03" />
+          <h3 class="card-title">Długoterminowe<br />partnerstwo</h3>
+          <p class="card-body">Zewnętrzny strateg, który rozumie twój kontekst od środka — bez zatrudniania kolejnej osoby.</p>
+        </article>
+      </div>
 
-      <!-- Karta 1 -->
-      <article class="card">
-        <img src="assets/num-1.png" class="card-num" alt="01" />
-        <h3 class="card-title">Warsztaty<br />i strategia</h3>
-        <p class="card-body">
-          Wyciągam z twojego zespołu to, co już w nim jest — i pomagam to zamienić w strategię.
-        </p>
-      </article>
-
-      <!-- Karta 2 -->
-      <article class="card">
-        <img src="assets/num-2.png" class="card-num" alt="02" />
-        <h3 class="card-title">Projektowanie<br />doświadczeń</h3>
-        <p class="card-body">
-          Każdy punkt styku z klientem ma znaczenie. Projektuję, żeby te punkty coś budowały.
-        </p>
-      </article>
-
-      <!-- Karta 3 -->
-      <article class="card">
-        <img src="assets/num-3.png" class="card-num" alt="03" />
-        <h3 class="card-title">Długoterminowe<br />partnerstwo</h3>
-        <p class="card-body">
-          Zewnętrzny strateg, który rozumie twój kontekst od środka — bez zatrudniania kolejnej osoby.
-        </p>
-      </article>
-
+      <a href="uslugi.html" class="orientation-cta reveal">
+        Zobacz pełną ofertę
+        <img src="assets/arrow-orange.png" alt="" aria-hidden="true" />
+      </a>
     </div>
+  </section>
 
-    <a href="uslugi.html" class="orientation-cta reveal">
-      Zobacz pełną ofertę
-      <img src="assets/arrow-orange.png" alt="" aria-hidden="true" />
-    </a>
+  <!-- =========================================================
+       BAND 2 — violet separator
+       ========================================================= -->
+  <div class="band band--violet" aria-hidden="true">
+    <div class="band-inner">
+      <span>Pomagam markom być takimi, o których się mówi</span>
+      <span>Pomagam markom być takimi, o których się mówi</span>
+      <span>Pomagam markom być takimi, o których się mówi</span>
+      <span>Pomagam markom być takimi, o których się mówi</span>
+    </div>
+  </div>
 
+  <!-- =========================================================
+       SEKCJA 04 — MANIFEST
+       ========================================================= -->
+  <section id="manifest">
+    <div class="section-inner">
+      <div class="manifest-grid">
+
+        <div class="manifest-left">
+          <p class="section-label reveal">Dlaczego to ma znaczenie</p>
+          <h2 class="manifest-lead reveal">
+            Polecenia mogą być<br />
+            <em>dziełem przypadku.</em><br />
+            Lepiej jak nie są.
+          </h2>
+          <div class="manifest-quote-card reveal">
+            <blockquote>
+              „To zmieniło sposób, w jaki patrzymy na klientów i na naszą markę."
+            </blockquote>
+          </div>
+        </div>
+
+        <div class="manifest-right reveal-right">
+          <div class="manifest-body">
+            <p>Polecenie od znajomego to najtańsza i najskuteczniejsza forma reklamy. Ale żeby ludzie polecali — muszą mieć o czym opowiadać.</p>
+            <p>AI potrafi dziś wygenerować strategię marki. Szybko i tanio. Czego nie potrafi: wyczuć, kiedy założyciel szuka słów i nie jest pewien co powiedzieć. Połączyć mechanikę eventową z tym, jak ludzie zapamiętują. Poprowadzić grupę przez proces tak, żeby doszli do wniosków, których sami by nie osiągnęli.</p>
+            <p><strong>To jest właśnie ta robota.</strong></p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       SEKCJA 05 — TRANSFORMACJE
+       ========================================================= -->
+  <section id="transformations">
+
+    <aside class="transformations-quote" aria-label="Opinia klienta">
+      <blockquote>
+        „Robiłam to po omacku. Teraz wiem, dlaczego to działało."
+        <cite>— klientka, po procesie strategicznym</cite>
+      </blockquote>
+    </aside>
+
+    <div class="section-inner">
+      <div class="transformations-head reveal">
+        <p class="section-label">Co się zmienia</p>
+        <h2 class="transformations-headline">Gdzie najczęściej<br />wchodzę.</h2>
+      </div>
+
+      <div class="accordion reveal">
+
+        <div class="accordion-item">
+          <button class="accordion-trigger" aria-expanded="false">
+            <span class="accordion-trigger-text">Marka nie oddaje tego, czym naprawdę jesteście</span>
+            <img src="assets/arrow-orange.png" class="accordion-arrow" alt="" aria-hidden="true" />
+          </button>
+          <div class="accordion-body" role="region">
+            <div class="accordion-body-inner">
+              Dobry produkt, ale żadna narracja. Właściciel czuje, że marka to nie to. Po warsztacie: jasna tożsamość, nazwane wartości, opisane wyróżniki. Wiesz co mówić — i możesz to wytłumaczyć każdemu nowemu pracownikowi.
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <button class="accordion-trigger" aria-expanded="false">
+            <span class="accordion-trigger-text">Działa, ale nikt nie wie dlaczego</span>
+            <img src="assets/arrow-orange.png" class="accordion-arrow" alt="" aria-hidden="true" />
+          </button>
+          <div class="accordion-body" role="region">
+            <div class="accordion-body-inner">
+              Firma działa dobrze "na wyczucie", ale nie ma ram. Nowe osoby trudno wdrożyć, decyzje komunikacyjne trudno podjąć. Po procesie: nazwane reguły, gotowy język dla całego zespołu.
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <button class="accordion-trigger" aria-expanded="false">
+            <span class="accordion-trigger-text">Strategia w szufladzie</span>
+            <img src="assets/arrow-orange.png" class="accordion-arrow" alt="" aria-hidden="true" />
+          </button>
+          <div class="accordion-body" role="region">
+            <div class="accordion-body-inner">
+              Strategia gdzieś zapisana, której nikt nie używa. Po procesie: jasna ścieżka, wyznaczone priorytety, zaplanowany proces zmiany — nie kolejny plik PDF.
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <button class="accordion-trigger" aria-expanded="false">
+            <span class="accordion-trigger-text">Klienci wychodzą, ale nie wracają</span>
+            <img src="assets/arrow-orange.png" class="accordion-arrow" alt="" aria-hidden="true" />
+          </button>
+          <div class="accordion-body" role="region">
+            <div class="accordion-body-inner">
+              Klienci są zadowoleni, ale nie polecają. Po procesie: zaprojektowane punkty styku, przemyślane momenty — marka, o której ludzie chcą mówić innym.
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
   </section>
 
   <script src="js/main.js"></script>
