@@ -1,5 +1,12 @@
 # PPPPPPPP — Changelog
 
+## 2026-06-10 — v0.5 — Word cycle + gradient + rotation physics
+
+### Zmieniono
+- **HERO — litery P** — wszystkie jednakowe; gradient pozycyjny `#7C60EC` (lewy) → `#FE5200` (prawy) przez JS; usunięto warianty nth-child
+- **HERO — word display** — nowa warstwa pod literami P: 8 slotów cyklicznie zmienia PRODUKT → PROCES → PROJEKT (1,5s pauza, animacja per-slot 100ms, stagger 25ms lewo→prawo)
+- **HERO — fizyka rotacji** — litery obracają się przy upadku; `omega` proporcjonalne do poziomego składnika odpychania przez kursor; przy odbiciu od podłogi obrót częściowo odwraca się i tłumi; mobile: scatter również aktywuje rotację
+
 ## 2026-06-09 — v0.4 — Hero physics letters
 
 ### Zmieniono
