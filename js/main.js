@@ -226,9 +226,10 @@ document.querySelectorAll('.accordion-trigger').forEach(btn => {
     letterH = firstLetter.offsetHeight;
     gap     = Math.round(letterW * 0.08);
 
-    const groupW = letterEls.length * letterW + (letterEls.length - 1) * gap;
+    const groupW      = letterEls.length * letterW + (letterEls.length - 1) * gap;
+    const totalSlotsW = (letterEls.length + WORDS[0].length) * letterW + (letterEls.length + WORDS[0].length - 1) * gap;
     startX = photoCenterX - groupW / 2;
-    startX = Math.max(0, Math.min(startX, heroW - groupW));
+    startX = Math.max(0, Math.min(startX, heroW - totalSlotsW));
     startY = Math.max(0, photoTopY - letterH * 1.5);
 
     letters = letterEls.map((el, i) => {

@@ -202,7 +202,7 @@ nav.scrolled {
   top: 0;
   font-family: var(--font-display);
   font-weight: 900;
-  font-size: clamp(56px, 9vw, 140px);
+  font-size: clamp(24px, 5vw, 80px);
   text-transform: uppercase;
   line-height: 1;
   letter-spacing: -.02em;
@@ -228,7 +228,7 @@ nav.scrolled {
   overflow: hidden;
   font-family: var(--font-display);
   font-weight: 900;
-  font-size: clamp(56px, 9vw, 140px);
+  font-size: clamp(24px, 5vw, 80px);
   line-height: 1;
   letter-spacing: -.02em;
   text-transform: uppercase;
