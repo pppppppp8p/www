@@ -343,8 +343,9 @@ document.querySelectorAll('.accordion-trigger').forEach(btn => {
     letters.forEach(lt => {
       if (!lt.active) {
         lt.active = true;
-        lt.vx = (Math.random() - 0.5) * 20;
-        lt.vy = -(Math.random() * 8 + 4);
+        lt.vx   = (Math.random() - 0.5) * 20;
+        lt.vy   = -(Math.random() * 8 + 4);
+        lt.omega = (Math.random() - 0.5) * OMEGA_STR * 1.5;
       }
     });
   }, { once: true });
