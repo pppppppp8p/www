@@ -231,6 +231,7 @@ nav.scrolled {
   font-size: clamp(56px, 9vw, 140px);
   line-height: 1;
   letter-spacing: -.02em;
+  text-transform: uppercase;
   user-select: none;
   /* width, height, color — set by JS */
 }
