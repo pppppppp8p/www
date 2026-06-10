@@ -110,6 +110,14 @@ document.querySelectorAll('.accordion-trigger').forEach(btn => {
   const REPEL_STR  = 14;
   const FLOOR_PAD  = 120;
 
+  function slotColor(i) {
+    const t = i / 7;
+    const r = Math.round(0x7C + (0xFE - 0x7C) * t);
+    const g = Math.round(0x60 + (0x52 - 0x60) * t);
+    const b = Math.round(0xEC + (0x00 - 0xEC) * t);
+    return `rgb(${r},${g},${b})`;
+  }
+
   const heroEl   = document.getElementById('hero');
   const photoEl  = document.querySelector('.hero-photo');
   const letterEls = Array.from(document.querySelectorAll('#hero .hero-p'));
@@ -120,6 +128,11 @@ document.querySelectorAll('.accordion-trigger').forEach(btn => {
   let heroMouseY = -9999;
   let letters    = [];
   let rafId      = null;
+  let letterW = 0;
+  let letterH = 0;
+  let gap     = 0;
+  let startX  = 0;
+  let startY  = 0;
 
   // ── Position letters above photo head ──────────────────────
   function initPhysics() {
@@ -134,19 +147,20 @@ document.querySelectorAll('.accordion-trigger').forEach(btn => {
     const firstLetter  = letterEls[0];
     firstLetter.style.opacity = '0';
     firstLetter.style.transform = 'translate(0,0)';
-    const letterW = firstLetter.offsetWidth;
-    const letterH = firstLetter.offsetHeight;
-    const gap     = Math.round(letterW * 0.08);
+    letterW = firstLetter.offsetWidth;
+    letterH = firstLetter.offsetHeight;
+    gap     = Math.round(letterW * 0.08);
 
-    const groupW  = letterEls.length * letterW + (letterEls.length - 1) * gap;
-    let   startX  = photoCenterX - groupW / 2;
+    const groupW = letterEls.length * letterW + (letterEls.length - 1) * gap;
+    startX = photoCenterX - groupW / 2;
     startX = Math.max(0, Math.min(startX, heroW - groupW));
-    const startY  = photoTopY - letterH * 1.5;
+    startY = Math.max(0, photoTopY - letterH * 1.5);
 
     letters = letterEls.map((el, i) => {
       const x = startX + i * (letterW + gap);
-      const y = Math.max(0, startY);
+      const y = startY;
       el.style.transform = `translate(${x}px,${y}px)`;
+      el.style.color = slotColor(i);
       return {
         el,
         x, y,
@@ -156,6 +170,10 @@ document.querySelectorAll('.accordion-trigger').forEach(btn => {
         w: letterW,
         h: letterH
       };
+    });
+
+    document.querySelectorAll('#hero .hero-slot').forEach((slot, i) => {
+      slot.style.color = slotColor(i);
     });
 
     // Stagger fade-in
