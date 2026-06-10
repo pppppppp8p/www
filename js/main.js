@@ -118,6 +118,77 @@ document.querySelectorAll('.accordion-trigger').forEach(btn => {
     return `rgb(${r},${g},${b})`;
   }
 
+  const WORDS = [
+    ['P','R','O','D','U','K','T',' '],
+    ['P','R','O','C','E','S',' ',' '],
+    ['P','R','O','J','E','K','T',' '],
+  ];
+  const WORD_PAUSE   = 1500;
+  const SLOT_STAGGER = 25;
+  const SLOT_ANIM    = 100;
+
+  function animateSlot(slot, nextChar) {
+    const cur = slot.querySelector('.slot-cur');
+    const nxt = slot.querySelector('.slot-nxt');
+
+    nxt.textContent = nextChar;
+
+    // Set initial off-screen position without transition
+    nxt.style.transition = 'none';
+    nxt.style.transform  = 'translateY(100%)';
+
+    // Double-rAF: forces browser to paint before adding the transition
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        cur.style.transition = `transform ${SLOT_ANIM}ms ease-in-out`;
+        nxt.style.transition = `transform ${SLOT_ANIM}ms ease-in-out`;
+        cur.style.transform  = 'translateY(-100%)';
+        nxt.style.transform  = 'translateY(0)';
+
+        setTimeout(() => {
+          // Swap without animation — cur becomes the confirmed current char
+          cur.style.transition = 'none';
+          nxt.style.transition = 'none';
+          cur.textContent      = nextChar;
+          cur.style.transform  = '';
+          nxt.style.transform  = 'translateY(100%)';
+          nxt.textContent      = '';
+        }, SLOT_ANIM + 10);
+      });
+    });
+  }
+
+  function initWordCycle() {
+    const heroWordEl = document.querySelector('#hero .hero-word');
+    if (!heroWordEl) return;
+
+    const slotEls = Array.from(heroWordEl.querySelectorAll('.hero-slot'));
+
+    // Position and size to match physics letter group
+    heroWordEl.style.left = startX + 'px';
+    heroWordEl.style.top  = startY + 'px';
+    heroWordEl.style.gap  = gap + 'px';
+    slotEls.forEach(slot => {
+      slot.style.width  = letterW + 'px';
+      slot.style.height = letterH + 'px';
+    });
+
+    let wordIdx = 0;
+
+    function flipToNext() {
+      wordIdx = (wordIdx + 1) % WORDS.length;
+      const word = WORDS[wordIdx];
+      slotEls.forEach((slot, i) => {
+        setTimeout(() => animateSlot(slot, word[i]), i * SLOT_STAGGER);
+      });
+      // Schedule next flip: pause + time for all slots to finish
+      setTimeout(flipToNext, WORD_PAUSE + slotEls.length * SLOT_STAGGER + SLOT_ANIM + 10);
+    }
+
+    // Start after 800ms — physics letters have all faded in (~560ms)
+    setTimeout(flipToNext, 800);
+  }
+
   const heroEl   = document.getElementById('hero');
   const photoEl  = document.querySelector('.hero-photo');
   const letterEls = Array.from(document.querySelectorAll('#hero .hero-p'));
@@ -280,6 +351,17 @@ document.querySelectorAll('.accordion-trigger').forEach(btn => {
       const allInactive = letters.every(lt => !lt.active);
       if (allInactive) {
         initPhysics();
+        // Reposition word display to match new layout
+        const heroWordEl = document.querySelector('#hero .hero-word');
+        if (heroWordEl) {
+          heroWordEl.style.left = startX + 'px';
+          heroWordEl.style.top  = startY + 'px';
+          heroWordEl.style.gap  = gap + 'px';
+          heroWordEl.querySelectorAll('.hero-slot').forEach(slot => {
+            slot.style.width  = letterW + 'px';
+            slot.style.height = letterH + 'px';
+          });
+        }
       } else {
         letters.forEach(lt => {
           if (lt.x + lt.w > heroW) lt.x = heroW - lt.w;
@@ -295,6 +377,7 @@ document.querySelectorAll('.accordion-trigger').forEach(btn => {
   window.addEventListener('load', () => {
     if (rafId) cancelAnimationFrame(rafId);
     initPhysics();
+    initWordCycle();
     rafId = requestAnimationFrame(tick);
   });
 })();
