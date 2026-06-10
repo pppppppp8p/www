@@ -213,14 +213,40 @@ nav.scrolled {
   color: var(--white);
 }
 
-/* Alternating color variants — brand palette */
-.hero-p:nth-child(2),
-.hero-p:nth-child(5) {
-  color: transparent;
-  -webkit-text-stroke: 2px var(--white);
+/* ── Hero word display (cycling beneath physics P's) ─────── */
+.hero-word {
+  position: absolute;
+  z-index: 3;
+  pointer-events: none;
+  display: flex;
+  align-items: flex-start;
+  /* left, top, gap — set by JS to match physics group */
 }
-.hero-p:nth-child(4) { color: var(--orange); }
-.hero-p:nth-child(7) { color: var(--violet); }
+
+.hero-slot {
+  position: relative;
+  overflow: hidden;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(56px, 9vw, 140px);
+  line-height: 1;
+  letter-spacing: -.02em;
+  user-select: none;
+  /* width, height, color — set by JS */
+}
+
+.slot-cur,
+.slot-nxt {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  display: flex;
+  align-items: flex-start;
+}
+
+.slot-nxt {
+  transform: translateY(100%);
+}
 
 /* Przemo photo — left side, full bleed, editorial magazine */
 .hero-photo {
