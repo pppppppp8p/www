@@ -109,6 +109,9 @@ document.querySelectorAll('.accordion-trigger').forEach(btn => {
   const REPEL_R    = 140;
   const REPEL_STR  = 14;
   const FLOOR_PAD  = 120;
+  const OMEGA_STR   = 8;
+  const ANG_DAMPING = 0.96;
+  const ANG_BOUNCE  = 0.35;
 
   function slotColor(i) {
     const t = i / 7;
@@ -239,7 +242,9 @@ document.querySelectorAll('.accordion-trigger').forEach(btn => {
         homeX: x, homeY: y,
         active: false,
         w: letterW,
-        h: letterH
+        h: letterH,
+        angle: 0,
+        omega: 0
       };
     });
 
@@ -269,8 +274,9 @@ document.querySelectorAll('.accordion-trigger').forEach(btn => {
         if (dist < REPEL_R && dist > 0) {
           lt.active = true;
           const mag = (1 - dist / REPEL_R) * REPEL_STR;
-          lt.vx = (dx / dist) * mag + (Math.random() - 0.5) * 1.5;
-          lt.vy = (dy / dist) * mag * 0.6 - (Math.random() * 2 + 1);
+          lt.vx   = (dx / dist) * mag + (Math.random() - 0.5) * 1.5;
+          lt.vy   = (dy / dist) * mag * 0.6 - (Math.random() * 2 + 1);
+          lt.omega = (dx / dist) * OMEGA_STR + (Math.random() - 0.5) * 2;
         }
         return;
       }
@@ -292,12 +298,15 @@ document.querySelectorAll('.accordion-trigger').forEach(btn => {
       lt.vy *= DAMPING;
       lt.x  += lt.vx;
       lt.y  += lt.vy;
+      lt.angle += lt.omega;
+      lt.omega *= ANG_DAMPING;
 
       // Floor
       if (lt.y + lt.h > floor) {
         lt.y  = floor - lt.h;
         lt.vy = -Math.abs(lt.vy) * BOUNCE;
         lt.vx *= 0.78;
+        lt.omega *= -ANG_BOUNCE;
         if (Math.abs(lt.vy) < 0.8) lt.vy = 0;
       }
       // Left wall
@@ -316,7 +325,7 @@ document.querySelectorAll('.accordion-trigger').forEach(btn => {
         lt.vy = Math.abs(lt.vy) * 0.3;
       }
 
-      lt.el.style.transform = `translate(${lt.x}px,${lt.y}px)`;
+      lt.el.style.transform = `translate(${lt.x}px,${lt.y}px) rotate(${lt.angle}deg)`;
     });
 
     rafId = requestAnimationFrame(tick);
