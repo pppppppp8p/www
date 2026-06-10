@@ -167,8 +167,9 @@ document.querySelectorAll('.accordion-trigger').forEach(btn => {
 
     const slotEls = Array.from(heroWordEl.querySelectorAll('.hero-slot'));
 
-    // Position and size to match physics letter group
-    heroWordEl.style.left = startX + 'px';
+    // Position word display immediately after the last physics P (same row)
+    const wordLeft = startX + letterEls.length * (letterW + gap);
+    heroWordEl.style.left = wordLeft + 'px';
     heroWordEl.style.top  = startY + 'px';
     heroWordEl.style.gap  = gap + 'px';
     slotEls.forEach(slot => {
@@ -364,7 +365,7 @@ document.querySelectorAll('.accordion-trigger').forEach(btn => {
         // Reposition word display to match new layout
         const heroWordEl = document.querySelector('#hero .hero-word');
         if (heroWordEl) {
-          heroWordEl.style.left = startX + 'px';
+          heroWordEl.style.left = (startX + letterEls.length * (letterW + gap)) + 'px';
           heroWordEl.style.top  = startY + 'px';
           heroWordEl.style.gap  = gap + 'px';
           heroWordEl.querySelectorAll('.hero-slot').forEach(slot => {
